@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+data/state.db
+data/documents/**/*.pdf
+data/discovered/
+data/manual_inbox/*.pdf
+output/
+*.egg-info/

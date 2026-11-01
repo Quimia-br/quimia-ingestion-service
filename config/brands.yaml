@@ -1,0 +1,53 @@
+# Marcas de outros fabricantes que aparecem nas buscas de imagem. Um candidato que cite uma delas
+# (ex.: "Downy Brisa Suave", "Urca Brisa Azul") é rejeitado, mesmo que contenha o nome da nossa marca.
+# Só entram nomes que não são palavras comuns; amplie conforme aparecerem falsos positivos.
+other_brands:
+  - downy
+  - urca
+  - comfort
+  - ypê
+  - ariel
+  - ala
+  - surf
+  - tixan
+  - lysoform
+  - pinho sol
+  - qboa
+  - sanol
+  - bombril
+  - limpol
+
+brands:
+  minuano:
+    display_name: "Minuano"
+    aliases: ["minuano"]
+    manufacturers: ["Flora", "Flora Produtos de Higiene e Limpeza"]
+    official_domains: ["flora.com.br"]
+    image_domains: ["compraflora.com.br"]  # loja oficial: só para foto, não é fonte de FDS
+    providers: ["flora", "search", "manual"]
+  assim:
+    display_name: "Assim"
+    aliases: ["assim"]
+    manufacturers: ["Flora", "Flora Produtos de Higiene e Limpeza"]
+    official_domains: ["flora.com.br"]
+    image_domains: ["compraflora.com.br"]  # loja oficial: só para foto, não é fonte de FDS
+    providers: ["flora", "search", "manual"]
+  brisa:
+    display_name: "Brisa"
+    aliases: ["brisa"]
+    manufacturers: ["Flora", "Flora Produtos de Higiene e Limpeza"]
+    official_domains: ["flora.com.br"]
+    image_domains: ["compraflora.com.br"]  # loja oficial: só para foto, não é fonte de FDS
+    providers: ["flora", "search", "manual"]
+  omo:
+    display_name: "OMO"
+    aliases: ["omo"]
+    manufacturers: ["Unilever"]
+    official_domains: ["unileverprofessional.com", "unilever.com.br", "omo.com"]
+    providers: ["unilever", "search", "manual"]
+  mr_musculo:
+    display_name: "Mr. Músculo"
+    aliases: ["mr musculo", "mr. musculo", "mr músculo", "mr. músculo", "mr muscle"]
+    manufacturers: ["SC Johnson", "Ceras Johnson"]
+    official_domains: ["scjohnson.com.br", "scjohnson.com", "mrmuscleclean.com"]
+    providers: ["search", "manual"]
