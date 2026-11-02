@@ -1,4 +1,4 @@
-# quimia-ingestion-service — v0.2 local
+# quimia-ingestion-service
 
 Serviço independente do Quimia para automatizar:
 
