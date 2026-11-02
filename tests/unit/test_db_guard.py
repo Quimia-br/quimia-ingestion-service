@@ -115,3 +115,24 @@ def test_every_db_command_blocked_before_connecting(clean_env, monkeypatch, fake
         assert "banco bloqueado" in result.output
         assert "segredo" not in result.output
     assert fake_psycopg == []
+
+
+def _repo(host, **kw):
+    return PostgresQuimiaRepository(host=host, port=1, dbname="d", user="u", password="p", **kw)
+
+
+def test_remote_host_is_allowed_only_when_named_exactly(clean_env, fake_psycopg):
+    assert _repo(AIVEN, allow_remote_host=AIVEN).conninfo["host"] == AIVEN
+    for outro in ("outro.aivencloud.com", AIVEN.upper() + ".evil"):
+        with pytest.raises(ConfigurationError):
+            _repo(outro, allow_remote_host=AIVEN)
+    with pytest.raises(ConfigurationError):
+        _repo(AIVEN)  # sem permissão explícita continua bloqueado
+
+
+def test_allowing_the_host_does_not_unblock_env_redirects(clean_env, fake_psycopg, monkeypatch):
+    for name, value in (("PGHOSTADDR", "203.0.113.9"), ("PGSERVICE", "prod"), ("DATABASE_URL", "postgres://u@evil.example/db")):
+        monkeypatch.setenv(name, value)
+        with pytest.raises(ConfigurationError):
+            _repo(AIVEN, allow_remote_host=AIVEN)
+        monkeypatch.delenv(name)

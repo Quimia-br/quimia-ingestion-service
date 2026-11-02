@@ -29,8 +29,10 @@ def non_local_db_hosts(host: str, env=os.environ) -> list[str]:
     return [h for h in hosts if h.lower() not in LOCAL_DB_HOSTS]
 
 
-def assert_local_db(host: str) -> None:
-    blocked = non_local_db_hosts(host)
+def assert_local_db(host: str, allow_remote_host: str | None = None) -> None:
+    # Permissão explícita para UM host, escrito por inteiro. Redirecionamentos (PGHOSTADDR, PGSERVICE,
+    # DATABASE_URL) continuam bloqueados: só o host configurado deixa de contar.
+    blocked = [h for h in non_local_db_hosts(host) if h != allow_remote_host]
     if blocked:
         raise ConfigurationError(
             f"banco bloqueado: destino não local ({', '.join(blocked)}); nesta fase só localhost/127.0.0.1/::1"
@@ -40,9 +42,13 @@ def assert_local_db(host: str) -> None:
 class PostgresQuimiaRepository:
     """Adapter fino para o schema atual do quimia-bd. Importa psycopg apenas em runtime."""
 
-    def __init__(self, *, host: str, port: int, dbname: str, user: str, password: str, sslmode: str = "require"):
-        # Antes de importar/conectar: nenhum caminho (CLI ou workflow) abre conexão remota.
-        assert_local_db(host)
+    def __init__(
+        self, *, host: str, port: int, dbname: str, user: str, password: str, sslmode: str = "require",
+        allow_remote_host: str | None = None,
+    ):
+        # Antes de importar/conectar: nenhum caminho (CLI ou workflow) abre conexão remota,
+        # salvo o host que o chamador nomear explicitamente (hoje só a carga controlada do MVP).
+        assert_local_db(host, allow_remote_host)
         try:
             import psycopg
         except ImportError as exc:
@@ -79,7 +85,7 @@ class PostgresQuimiaRepository:
             row = cur.fetchone()
             return row[0] if row else None
 
-    def get_or_create_product(self, brand: str, product_name: str) -> int:
+    def get_or_create_product(self, brand: str, product_name: str, tipo_produto: str = "outro") -> int:
         with self._connect() as conn, conn.cursor() as cur:
             cur.execute("SELECT id FROM marca WHERE lower(nome) = lower(%s) LIMIT 1", (brand,))
             row = cur.fetchone()
@@ -98,7 +104,7 @@ class PostgresQuimiaRepository:
                 return row[0]
             cur.execute(
                 "INSERT INTO produto (id_marca, nome, tipo_produto, descricao) VALUES (%s, %s, %s, %s) RETURNING id",
-                (brand_id, product_name, "outro", "Importado automaticamente a partir de FDS."),
+                (brand_id, product_name, tipo_produto, "Importado automaticamente a partir de FDS."),
             )
             return cur.fetchone()[0]
 
