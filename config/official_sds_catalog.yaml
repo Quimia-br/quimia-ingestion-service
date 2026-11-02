@@ -1,0 +1,29 @@
+# Bootstrap de documentos oficiais conhecidos. Não é fonte de verdade completa.
+# O discovery também tenta catálogo oficial, sitemap/crawl e fallback de busca.
+documents:
+  - provider: flora_catalog
+    brand: Minuano
+    product_name: "Multiuso Antibac Minuano Tradicional 500 ml"
+    source_url: "https://flora.com.br/wp-content/uploads/2020/11/FISPQ-00-MULTIUSO-ANTIBAC-MINUANO-TRADICIONAL-12X500ML-403227.pdf"
+    version: "00"
+    data_atualizacao: "2020-10-23"
+
+  - provider: flora_catalog
+    brand: Assim
+    product_name: "Detergente em Pó Assim Floral"
+    source_url: "https://flora.com.br/wp-content/uploads/2020/05/FISPQIT000002-01-DETERGENTE_PO_ASSIM_FLORAL_402829-402830-402991_rev01.pdf"
+    version: "0.1"
+    data_atualizacao: "2019-05-28"
+
+  - provider: flora_catalog
+    brand: Brisa
+    product_name: "Detergente Lava-Louças Brisa Maçã"
+    source_url: "https://flora.com.br/wp-content/uploads/2023/01/FISPQ_01_403166_DETERGENTE-LAVA-LOUCAS-BRISA-MACA.pdf"
+    data_atualizacao: "2022-12-30"
+
+  - provider: flora_catalog
+    brand: Brisa
+    product_name: "Amaciante Brisa Azul"
+    source_url: "https://flora.com.br/wp-content/uploads/2021/07/FISPQ_00_-402951_403667_AMACIANTE-BRISA-AZUL.pdf"
+    version: "0.0"
+    data_atualizacao: "2021-03-16"
